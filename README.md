@@ -72,7 +72,7 @@ python evaluate.py
 ```
 Performance Metrics:
 
-📊 Accuracy: Overall prediction accuracy
-✅ Sensitivity: True positive rate
-✅ Specificity: True negative rate
-📈 MCC: Matthews Correlation Coefficient
+-📊 Accuracy: Overall prediction accuracy
+-✅ Sensitivity: True positive rate
+-✅ Specificity: True negative rate
+-📈 MCC: Matthews Correlation Coefficient
