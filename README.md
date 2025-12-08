@@ -1,26 +1,28 @@
-# FeroConCap:Ferroptosis-Related Proteins Identification
-
-Official implementation of **"Contrastive Representation Learning and Capsule Networks Enable Accurate Identification of Ferroptosis-Related Proteins"** (under review).
-
-🌐 **Web Server:** https://ycclab.cuhk.edu.cn/FeroConCap  
+# FeroConCap: Ferroptosis-Related Proteins Identification
 
 ---
 ## Overview
+This repository contains the official PyTorch implementation of **FeroConCap**, a novel deep learning framework that integrates capsule networks with supervised contrastive learning for accurate identification of ferroptosis-related proteins from sequences.
 
-This repository contains the official PyTorch implementation of FeroConCap, a novel method that integrates capsule networks with supervised contrastive learning to accurately identify ferroptosis-related proteins from sequences.
-It includes:
-- Integration of **Capsule Networks** for hierarchical feature learning
-- **Supervised Contrastive Learning** for discriminative representation
-- **Automatic feature extraction** without handcrafted features
+> **"Contrastive Representation Learning and Capsule Networks Enable Accurate Identification of Ferroptosis-Related Proteins"**  
+> *Manuscript under review*
 
-
----
-# Project Structure
+🌐 **Web Server:** https://ycclab.cuhk.edu.cn/FeroConCap
 
 ---
-# Data
+## Key Features
+
+- 🧬 **Capsule Network Integration** — Hierarchical feature learning for capturing complex protein sequence patterns
+- 🎯 **Supervised Contrastive Learning** — Enhanced discriminative representations for improved classification performance  
+- ⚡ **Automatic Feature Extraction** — End-to-end learning without manual feature engineering
 
 ---
-# Setup and Installation
+## Project Structure
+
 ---
-# Usage
+## Data
+
+---
+## Setup and Installation
+---
+## Usage
