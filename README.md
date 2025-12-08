@@ -45,6 +45,34 @@ Contains **Frequency Chaos Game Representation (FCGR)** transformed data:
 | `test_fcgr.txt` | FCGR features for testing | `testing.fasta` |
 
 ---
-## Setup and Installation
----
 ## Usage
+
+### 1. Install dependencies
+```
+conda env creat -f environment.yml
+```
+
+### 2. Model Training
+
+Train the model from scratch using the training dataset:
+```
+python train.py
+```
+- Loads training data from `data/FCGR/`.
+- The training script will automatically save the model to `model/best_model.pth`.
+
+
+
+### 3. Model Evaluation
+
+Evaluate the trained model on the test set:
+
+```
+python evaluate.py
+```
+Performance Metrics:
+
+📊 Accuracy: Overall prediction accuracy
+✅ Sensitivity: True positive rate
+✅ Specificity: True negative rate
+📈 MCC: Matthews Correlation Coefficient
