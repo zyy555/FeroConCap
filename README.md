@@ -17,10 +17,32 @@ This repository contains the official PyTorch implementation of **FeroConCap**, 
 - ⚡ **Automatic Feature Extraction** — End-to-end learning without manual feature engineering
 
 ---
-## Project Structure
-
----
 ## Data
+
+The dataset is organized into two main directories:
+```
+data/
+├── Fasta/ # Raw protein sequences
+└── FCGR/ # Transformed FCGR features
+```
+
+### 1. Fasta Directory
+
+Contains protein sequences in FASTA format:
+
+| File | Description | Format |
+|------|-------------|--------|
+| `training.fasta` | Training set protein sequences | FASTA |
+| `testing.fasta` | Testing set protein sequences | FASTA |
+
+### 2. FCGR Directory
+
+Contains **Frequency Chaos Game Representation (FCGR)** transformed data:
+
+| File | Description | Source |
+|------|-------------|--------|
+| `train_fcgr.txt` | FCGR features for training | `training.fasta` |
+| `test_fcgr.txt` | FCGR features for testing | `testing.fasta` |
 
 ---
 ## Setup and Installation
