@@ -20,10 +20,11 @@ This repository contains the official PyTorch implementation of **FeroConCap**, 
 ## Data
 
 The dataset is organized into two main directories:
+```
 data/
 ├── Fasta/ # Raw protein sequences
 └── FCGR/ # Transformed FCGR features
-
+```
 
 ### 1. Fasta Directory
 
@@ -43,13 +44,6 @@ Contains **Frequency Chaos Game Representation (FCGR)** transformed data:
 | `train_fcgr.txt` | FCGR features for training | `training.fasta` |
 | `test_fcgr.txt` | FCGR features for testing | `testing.fasta` |
 
-### What is FCGR?
-
-Frequency Chaos Game Representation (FCGR) is a numerical transformation method that:
-- Converts protein sequences into 2D frequency matrices
-- Preserves sequence patterns and compositional information
-- Enables efficient feature representation for machine learning models
-- 
 ---
 ## Setup and Installation
 ---
