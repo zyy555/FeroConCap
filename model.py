@@ -44,11 +44,7 @@ class PrimaryCaps(nn.Module):
         ls = []
         u = [capsule(x) for capsule in self.capsules]
         u = torch.stack(u, dim=1)
-        #print("usize",u.size())
-        #print("usize1,2,0",u.size(1),u.size(2),u.size(0))
         u = u.view(x.size(0), u.size(1)*u.size(3)*u.size(4) , -1)
-        #u.view(x.size(0)=batchsize, 8*24*24, -1)
-        #print("usize",u.size())
         pri=u.detach().cpu()
         ls.append(pri)
         return self.squash(u)
@@ -67,19 +63,13 @@ class DigitCaps(nn.Module):
         self.in_channels = in_channels
         self.num_routes = num_routes
         self.num_capsules = num_capsules
-        #print(in_channels)
-        #print(self.in_channels)
         self.W = nn.Parameter(torch.randn(1, num_routes, num_capsules, out_channels, in_channels))
 
 
     def forward(self, x):
         batch_size = x.size(0)
-        #print("x.size",x.size)
         x = torch.stack([x] * self.num_capsules, dim=2).unsqueeze(4)
-        #print("x size",x.size())
-        #print(self.W.shape)
         W = torch.cat([self.W] * batch_size, dim=0)
-        #print("w size",W.size())
         u_hat = torch.matmul(W, x)
 
         b_ij = Variable(torch.zeros(1, self.num_routes, self.num_capsules, 1))
@@ -99,11 +89,7 @@ class DigitCaps(nn.Module):
                 b_ij = b_ij + a_ij.squeeze(4).mean(dim=0, keepdim=True)
 
         v_final = v_j.squeeze(1)
-        #print("v_final.shape",v_final.shape)
         v_c = torch.sqrt((v_final ** 2).sum(dim=2, keepdim=True))
-        # v_j = v_j.unsqueeze(-1)
-        #print("v_j.shape", v_j.shape)
-        #print("v_c.shape", v_c.shape)
         return v_final
 
     def squash(self, input_tensor):
@@ -130,11 +116,9 @@ class Decoder(nn.Module):
 
         _, max_length_indices = classes.max(dim=1)
         masked = Variable(torch.sparse.torch.eye(2))
-        #print("mask", masked.shape)
         if USE_CUDA:
             masked = masked.cuda()
         masked = masked.index_select(dim=0, index=max_length_indices.squeeze(1).data)
-        #print("mask",masked.shape)
 
         reconstructions = self.reconstraction_layers((x * masked[:, :, None, None]).view(x.size(0), -1))
         reconstructions = reconstructions.view(-1, 1, 64, 64)
@@ -160,9 +144,7 @@ class CapsNet(nn.Module):
         recon = self.reconstruction_loss(data, reconstructions)
         features = x.squeeze(-1).mean(dim=1)  # shape: (B, out_dim)
         supcon = self.contrastive_loss(features, target)
-        # print(f"Margin Loss: {margin.item()}, Reconstruction Loss: {recon.item()}, Contrastive Loss: {supcon.item()}")
         return margin + recon + supcon
-        # return self.margin_loss(x, target) + self.reconstruction_loss(data, reconstructions)
 
     def contrastive_loss(self, x, labels, tao=0.07):
         batch_size = x.size(0)
@@ -190,12 +172,8 @@ class CapsNet(nn.Module):
 
         v_c = torch.sqrt((x**2).sum(dim=2, keepdim=True))
 
-        #with torch.no_grad():
-        #    print(f"v_c min: {v_c.min().item()}, max: {v_c.max().item()}, mean: {v_c.mean().item()}")
-
         left = F.relu(0.9 - v_c).view(batch_size, -1)
         right = F.relu(v_c - 0.1).view(batch_size, -1)
-        # print(labels)
         loss = labels * left + 0.5 * (1.0 - labels) * right
         loss = loss.sum(dim=1).mean()
 
