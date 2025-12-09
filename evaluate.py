@@ -11,7 +11,7 @@ from sklearn.metrics import auc
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report,matthews_corrcoef,f1_score
 import capsule_net_final
-from capsule_net_final import CapsNet
+from model import CapsNet
 
 
 USE_CUDA = torch.cuda.is_available()
@@ -25,15 +25,9 @@ def cal_acc(y_true,X_test,net):
     all_score = []
     for step, (batch_x, batch_y) in enumerate(test_loader):
         output, reconstructions, masked = net(batch_x.to("cuda"))
-        #score = logit.squeeze(1).cpu().detach().numpy().tolist()
-        #all_score += score
-        #pred_labels = np.argmax(masked.data.cpu().numpy(), 1)
         pred  = np.argmax(masked.cpu().detach().numpy(),axis=1).tolist()
-        # print(pred)
         all_pred += pred
     tn, fp, fn, tp = confusion_matrix(y_test, all_pred).ravel()
-    #fpr, tpr, _ = roc_curve(test_labels, all_pred)
-    #aucroc = auc(fpr, tpr)
     perftab = {"CM": confusion_matrix(y_test, all_pred),
             'ACC': (tp + tn) / (tp + fp + fn + tn),
             'SEN': tp / (tp + fn),
@@ -95,7 +89,6 @@ with torch.no_grad():
     for step, (batch_x, batch_y) in enumerate(test_loader):
         output, reconstructions, masked = model_cap(batch_x.to(DEVICE))
         pred  = np.argmax(masked.cpu().detach().numpy(),axis=1).tolist()
-        #print(pred)
         classes = torch.sqrt((output ** 2).sum(2))
         classes = F.softmax(classes,dim=1)
         all_pred += pred
